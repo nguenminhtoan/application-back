@@ -25,12 +25,15 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
-
+      
     - name: Install dependencies
       run: pip install -r requirements.txt
+    
+    - name: Install dependencies
+      run: pip install pylint
 
     - name: Lint
-      run: uwsgi --http :5000 --master --enable-threads -s /var/www/app/app.sock --manage-script-name --mount /=app:app
+      run: pylint __init__.py
 
     - name: Test
       run: python -m unittest discover tests/
