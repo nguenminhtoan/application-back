@@ -30,7 +30,7 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Lint
-      run: pylint app.py
+      run: uwsgi --http :5000 --master --enable-threads -s /var/www/app/app.sock --manage-script-name --mount /=app:app
 
     - name: Test
       run: python -m unittest discover tests/
